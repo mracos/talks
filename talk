@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+talk:new() {
+    talk_name="$2"
+    if [[ -n "$talk_name" ]]; then
+        echo $talk_name
+        talk_dir="src/$talk_name"
+        talk_file="$talk_dir/talk.md"
+
+        mkdir -p "$talk_dir"
+        cp talk.md "$talk_file"
+        sed -i "s/{{TITLE}}/$talk_name/g" "$talk_file"
+    fi
+}
+
+talk:done() {
+    talk_name="$2"
+    talk_file="src/$talk_name"
+    if [[ -n "$talk_file" ]]; then
+        ln -s "../$talk_file" "done/$talk_name"
+    fi
+}
+
+talks:todo() {
+    for talk_todo in "$(ls src/)"; do
+        if [[ ! -e "done/$talk_todo" ]]; then
+            echo "$talk_todo"
+        fi
+    done
+
+}
+
+"$1" "$@"
