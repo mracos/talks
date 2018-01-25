@@ -23,12 +23,11 @@ talk:done() {
 }
 
 talks:todo() {
-    for talk_todo in "$(ls src/)"; do
+    for talk_todo in $(ls src/); do
         if [[ ! -e "done/$talk_todo" ]]; then
             echo "$talk_todo"
         fi
     done
-
 }
 
 "$1" "$@"
