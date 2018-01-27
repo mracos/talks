@@ -1,0 +1,22 @@
+{
+  "name": "talks",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\"> TALKS :microphone: :microphone: </h1>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/reveal-md done --host 0.0.0.0 --port 5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mracos/talks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mracos/talks/issues"
+  },
+  "homepage": "https://github.com/mracos/talks#readme",
+  "dependencies": {
+    "reveal-md": "^1.1.1"
+  }
+}
