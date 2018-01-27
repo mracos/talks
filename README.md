@@ -31,9 +31,6 @@ Or let the [util](./talk) do the job for you:
   ```
 
 - To run a webserver showing all your done talks, run `npm install && npm run start`
-  ```sh
-    node_modules/.bin/reveal-md -w src/talk_name/talk.md
-  ```
 
 Do not forget to commit all the changes to `src` and `done` :smile:
 
