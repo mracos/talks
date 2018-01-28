@@ -25,9 +25,9 @@ Or let the [util](./talk) do the job for you:
     ./talk talk:done talk_name
   ```
 
-- To present you just do a (will open an tab/window in your browser with the rendered talk)
+- To present you just do a (will open an tab/window in your browser with the listing of all the talks)
   ```sh
-    npm install && node_modules/.bin/reveal-md -w src/talk_name/talk.md
+    npm install && npm run all
   ```
 
 - To run a webserver showing all your done talks, run `npm install && npm run start`

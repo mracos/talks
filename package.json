@@ -4,7 +4,9 @@
   "description": "<h1 align=\"center\"> TALKS :microphone: :microphone: </h1>",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/reveal-md done --host 0.0.0.0 --port 5000"
+    "start": "npm run done",
+    "done": "node_modules/.bin/reveal-md done --host 0.0.0.0 --port 5000",
+    "all": "node_modules/.bin/reveal-md src --host 0.0.0.0 --port 5000"
   },
   "repository": {
     "type": "git",
