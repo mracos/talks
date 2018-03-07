@@ -31,7 +31,7 @@ talks:todo() {
 }
 
 talks:present() {
-    node_modules/.bin/reveal-md src --host 0.0.0.0
+    node_modules/.bin/reveal-md src --host 0.0.0.0 --theme league
 }
 
 "$1" "$@"
