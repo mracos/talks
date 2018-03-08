@@ -6,7 +6,6 @@ revealOptions:
     transition: slide
 ---
 
-<!-- .slide: data-background="./bg_1.webp" -->
 # Existe um mundo além de OOP e procedural
 [@mracos](https://github.com/mracos) 🔝
 
@@ -139,12 +138,12 @@ Note: ao contrário de oop (objetos e estado + ações) ou imperativo (mudança 
 ----
 
 ```
-                                        \|/
- o           v----------v       o        o
+      clone_com_peruca(pessoa)          \|/
+ o           v----------v       o       /o\
 /|\    ->    |função  de|      /|\  +   /|\
-/ \          | clonagem |      / \      / \  <---- retorna novo com peruca
-             | + peruca |       ^      
-             V----------V       |_ antigo
+/ \          | clonagem |      / \      / \  <---- retorna novo
+             | + peruca |       ^                  com peruca
+             V----------V       |_ antigo se mantém
 ```
 
 ---
@@ -402,21 +401,6 @@ Note: exemplo com configurações, já que é imutável a gente passa muita cois
 ### funções
 #### pattern match
 
-Funções podem ser definidas com base nos seus parâmetros
-
-```elixir
-print_if_debug = fn (value, true) -> IO.puts(value)
-
-print_if_debug.(123, true) # 123
-print_if_debug.(123, false) # Erro, função não encontrada
-```
-
-Note: pq as funções podem ser definidas com base nos seus argumentos!!
-
-----
-
-#### pattern match
-
 Um dado que "casa" com o outro
 - `=` é um operador de pattern match
 
@@ -427,10 +411,32 @@ variavel = 4
 [1, 2, 3, 4] = [1, 2, 3, variavel]
 [primeiro, 2, 3] = [1, 2, 3]
 
-sum_only_with_one = fn (1, y) -> 1 + y end # só é chamada caso o primeiro parêmtro seja 1
+# só é chamada caso o primeiro parêmtro seja 1
+sum_only_with_one = fn (1, y) -> 1 + y end
+
+#
+sum_only_with_one.(1, 2) # 3
+sum_only_with_one.(2, 3) # erro, função não encontrada
 ```
 
 Note: Muito bom porque tu nõa precisa ficar checando dado, tu seta isso na própria definição da função
+      Não encontrada pq ele não encontrou uma definição de função que casou com a estrutura
+
+----
+
+### funções
+#### pattern match
+
+Funções podem ser definidas com base nos seus parâmetros
+
+```elixir
+print_if_debug = fn (value, true) -> IO.puts(value)
+
+print_if_debug.(123, true) # 123
+print_if_debug.(123, false) # Erro, função não encontrada
+```
+
+Note: pq as funções podem ser definidas com base nos seus argumentos!!
 
 ---
 
@@ -461,19 +467,33 @@ Note: Muito bom porque tu nõa precisa ficar checando dado, tu seta isso na pró
 ### functional programming?
 #### the bad fellas
 
-1. outra forma de pensar -> curva de aprendizado
-1. alta memória
-1. outra format de pensar
-1. (pra algumas coisas) too much mathy
-
-----
-
-Devs ruins vão desenvovler código ruim de qualquer forma
+- outra forma de pensar -> curva de aprendizado
+- alta memória
+- outra format de pensar
+- (pra algumas coisas) too much mathy
 
 ---
 
 ### lhes apresento
 #### Elixir
+(eu tentei) 
+``` 
+              .
+            ..
+           ...
+         .....
+        ........
+       ...........
+      ...............
+     ..................
+    ......................
+   .......................
+   .......................
+    .....................
+     ...................
+      .................
+      ................
+```
 
 ----
 
@@ -492,8 +512,14 @@ Note: Mas o porque de eu ter escolhido essa inguagem e não jshit
   1. tooling MUITO bom (ferramentas que permeiam a linguagem)
   1. sintaxe (só sintaxe) inspirado em ruby (<3)
   1. comunidade mt top
-
+  
 Note: php tem que baixar o composer, npm vive dando merda ai e tem que baixar um react-cli, vue-cli...
+
+---
+
+
+Questions?
+
 ---
 
 Dicas
@@ -506,10 +532,6 @@ Dicas
   dora o lance de ser imutável e ter que copiar toda a lista pq foi no final
 
 Note: prependar: adicionar no início, appendar: adicionar no final
-
----
-
-Questions?
 
 ---
 
