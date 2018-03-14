@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+reveal_bin="node_modules/.bin/reveal-md"
+
 talk:new() {
     talk_name="$2"
     if [[ -n "$talk_name" ]]; then
@@ -31,7 +33,7 @@ talks:todo() {
 }
 
 talks:present() {
-    node_modules/.bin/reveal-md src --host 0.0.0.0 --theme league
+    $reveal_bin src --host 0.0.0.0 --theme league
 }
 
 "$1" "$@"
