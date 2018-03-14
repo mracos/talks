@@ -27,10 +27,20 @@ Or let the [util](./talk) do the job for you:
 
 - To present you just do a (will open an tab/window in your browser with the listing of all the talks)
   ```sh
-    npm install && npm run all
+    npm install && ./talk talks:present
   ```
 
-- To run a webserver showing all your done talks, run `npm install && npm run start`
+- To compile a talk (generate a pdf) (need to have the phantomjs executable on $PATH)
+  Will generate an file to `dist/`
+  ```sh
+    ./talk talk:compile path/to/talk.md
+  ```
+  
+- To compile all of the done talks, do a (will output the files to `dist/`)
+  ```sh
+    ./talk talks:compile:done
+  ```
+
 
 Do not forget to commit all the changes to `src` and `done` :smile:
 

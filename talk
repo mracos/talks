@@ -24,6 +24,17 @@ talk:done() {
     fi
 }
 
+talk:compile() {
+    talk_path="$2"
+    talk_name=$(echo $talk_path | cut -d '/' -f 2)
+
+    output_dir="dist"
+    output_talk="$output_dir/$talk_name"
+    mkdir -p $output_dir
+
+    $reveal_bin "$talk_path" --print "$output_talk" --theme league
+}
+
 talks:todo() {
     for talk_todo in $(ls src/); do
         if [[ ! -e "done/$talk_todo" ]]; then
@@ -34,6 +45,12 @@ talks:todo() {
 
 talks:present() {
     $reveal_bin src --host 0.0.0.0 --theme league
+}
+
+talks:compile:done() {
+    for talk_done_path in $(find -L done -iname '*.md'); do
+        talk:compile _ $talk_done_path
+    done
 }
 
 "$1" "$@"
