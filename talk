@@ -88,9 +88,9 @@ done:index() {
 
     for talk in $(ls src/); do
         if [[ -e "src/$talk/.done" ]]; then
-            echo "<li>"
-            echo "<a href=\"/$talk\">$talk</a>" >> $index_file
-            echo "</li>"
+            echo "<li>" >> $index_file
+            echo "<a href=\"/talks/$talk\">$talk</a>" >> $index_file
+            echo "</li>" >> $index_file
         fi
     done
 

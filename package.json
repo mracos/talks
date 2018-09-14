@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "heroku-prebuild": "npm i -g phantomjs-prebuilt",
-    "heroku-postbuild": "./talk talks:compile:done"
+    "heroku-postbuild": "./talk done:index"
   },
   "repository": {
     "type": "git",
