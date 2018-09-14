@@ -78,6 +78,26 @@ todo:list() {
     done
 }
 
+done:index() {
+    done:compile
+
+    echo "Generating html index file"
+
+    index_file="dist/index.html"
+    echo "<html><body><ul>" >> $index_file
+
+    for talk in $(ls src/); do
+        if [[ -e "src/$talk/.done" ]]; then
+            echo "<li>"
+            echo "<a href=\"/$talk\">$talk</a>" >> $index_file
+            echo "</li>"
+        fi
+    done
+
+    echo "<a href=\"//github.com/mracos/talks\">See on github</a>" >> $index_file
+    echo "</ul></body></html>" >> $index_file
+}
+
 
 help() {
     cat "$0" | grep "^.*() {$" | cut -d "(" -f1
