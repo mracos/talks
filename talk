@@ -54,3 +54,12 @@ talks:compile:done() {
 }
 
 "$1" "$@"
+help() {
+    cat "$0" | grep "^.*() {$" | cut -d "(" -f1
+}
+
+if [ ! -z ${1:-} ]; then
+    "$1" "$@"
+else
+    help
+fi
