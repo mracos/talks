@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>OOP</title>
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/night.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+# OOP
+### ~~Pure~~ Object Oriented Programming
+[@mracos](https://github.com/mracos) 🔝
+</script></section><section  data-markdown><script type="text/template">
+- Object oriented programming is not **only** about **classes**!!
+    - For instance, in javascript and lua we have prototype based inhiterance (no classes)
+    - will explain later 😼
+</script></section><section  data-markdown><script type="text/template">
+Object oriented programming is about: PASMEN, **objects**
+
+Remeber objects? That little things that you say that are **only** instantiated classes?
+
+Well, they are much more
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background="./assets/matrix.gif" -->
+Take the red pill neo 🔴 💊
+</script></section><section  data-markdown><script type="text/template">
+Objects were made to simplify and abstract some concepts like
+- state (data)
+- ~~complex~~ interactions between and using *state*
+
+<aside class="notes"><p>Back there when alan key came with the concept</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+One example:
+- we have an `Account` object, with a `bankroll` state of 100 dollars
+- we also want to have the possibility of `withdrawing` and `depositing` money
+</script></section><section data-markdown><script type="text/template">
+```ruby
+account = Object.new
+# => #<Object:0x00005645237b8810>
+account.instance_eval do
+    def bankroll
+        @bankroll
+    end
+    def deposit(quantity)
+        if @bankroll
+            @bankroll += quantity
+        else
+            @bankroll = quantity
+        end
+    end
+    def withdraw(quantity)
+        @bankroll -= quantity
+        quantity
+    end
+end
+# => :withdraw
+```
+<aside class="notes"><ul>
+<li>I&#39;m just executing in the context of the class</li>
+<li>the instance_eval is just the way the language do this</li>
+<li>in javascript we could do the same</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+```ruby
+account.bankroll
+# => nil
+account.deposit 12
+# => 12
+account.bankroll
+# => 12
+account.withdraw 4
+# => 4
+account.bankroll
+# => 8
+```
+<aside class="notes"><p>I can have an object <code>user</code> that has the account <code>state</code>
+And it iteracts via method call</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+- See that we didin't touch about `classes`, `inhiterances`, `methods`, `properties`, `polymorphism` and all that things?
+
+> And yet, we covered the **OOP core**, that is **state and interactions** regarding objects
+
+</script></section><section ><section data-markdown><script type="text/template">
+- With **state** we can relate to `instance properties`
+- As for **message passing**, here we can call then `methods`
+</script></section><section data-markdown><script type="text/template">
+- we are passing the `deposit` message to the account object
+- with the 100 "body"
+
+```ruby
+account.deposit 100
+# => 108
+```
+</script></section><section data-markdown><script type="text/template">
+- we have the bankroll state
+
+```ruby
+account.instance_variables
+# => [:@bankroll]
+account.instance_variable_get "@bankroll"
+# => 108
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+But why call then that? Because at least on more pure OOP languages, that is exactly what it means
+
+When we call the objects methods we are *passing a message* to that object,
+we do **operations on properties to mess with the state**
+</script></section><section data-markdown><script type="text/template">
+**We don't mess with the state directly!!**
+</script></section><section data-markdown><script type="text/template">
+```ruby
+class Account
+    @bankroll
+end
+# => nil
+account = Account.new
+# => #<Account:0x000055b5abac0b00>
+account.bankroll
+# => NoMethodError: undefined method `bankroll' for #<Account:0x000055b5abac0b00>
+account.bankroll = 12
+# => NoMethodError: undefined method `bankroll=' for #<Account:0x000055b5abac0b00>
+```
+
+<aside class="notes"><p>Ruby kinda enforces not mess with the state</p>
+</aside></script></section><section data-markdown><script type="text/template">
+```ruby
+class Account
+    def bankroll
+        @bankroll
+    end
+    def bankroll=(bankroll)
+        @bankroll = bankroll
+    end
+end
+# => :bankroll=
+```
+
+<aside class="notes"><p>Note that even the instance variable accessor and writer are methods</p>
+<p>But it gets tiring could it also be with <code>attr_accessor :bankroll</code></p>
+</aside></script></section><section data-markdown><script type="text/template">
+- The accessor is a method
+
+```ruby
+account = Account.new
+# => #<Account:0x000055b5ab5a9f68>
+account.bankroll
+# => nil
+```
+
+- Even the assignment of a instance is a method!!
+
+```ruby
+account.bankroll = 12
+# => 12
+account.bankroll
+# => 12
+```
+
+- can be like this too
+
+```ruby
+account.bankroll= 52
+# => 52
+account.bankroll
+# => 52
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+To a language be *pure* OOP (like smalltalk, and on some points ruby)
+they have to have some properties like <sup>[1](http://wiki.c2.com/?AlanKaysDefinitionOfObjectOriented)</sup>
+<ul>
+    <li class="fragment"> **EVERYTHING** is an object </li>
+    <li class="fragment"> no primitives like: `int`, `float` (they also are a class) </li>
+    <li class="fragment">
+        objects **ONLY** communicate by message passing
+        <ul>
+            <li class="fragment">that mean no operators</li>
+            <li class="fragment">no public properties</li>
+        </ul>
+    </li>
+    <li class="fragment"> ...  </li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+- Everything is an object
+
+```ruby
+number = 1
+# => 1
+string = "marcos"
+# => "marcos"
+number.class
+# => Integer
+string.class
+# => String
+```
+
+```ruby
+1.class
+# => Integer
+"marcos".class
+# => String
+true.class
+# => TrueClass
+```
+</script></section><section data-markdown><script type="text/template">
+- A class is also an object!!! MINDBLOWN
+
+```ruby
+class A
+end
+# => nil
+
+A.is_a? Object
+# => true
+A.class
+# => Class
+```
+</script></section><section data-markdown><script type="text/template">
+- We only communicate by message passing
+```ruby
+1.positive?
+# => true
+1.methods.slice(18, 6)
+# => [:==, :===, :[], :inspect, :size]
+1.== 2
+# => false
+1.size
+# => 8
+1.respond_to? "+"
+# => true
+```
+</script></section><section data-markdown><script type="text/template">
+- not so pure
+
+```ruby
+if.class
+# => SyntaxError: unexpected '.'
+```
+</script></section></section><section  data-markdown><script type="text/template">
+Questions?
+</script></section><section  data-markdown><script type="text/template">
+Thanks! 😸
+</script></section><section  data-markdown><script type="text/template">
+# EXTRAS
+
+1. Prototype based inheritance
+</script></section><section  data-markdown><script type="text/template"></script></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {"transition":"slide"};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+
+        <script>
+            Reveal.initialize(options);
+        </script>
+    </body>
+</html>
