@@ -3,57 +3,82 @@ set -euo pipefail
 
 reveal_bin="node_modules/.bin/reveal-md"
 
-talk:new() {
+new() {
     talk_name="$2"
     if [[ -n "$talk_name" ]]; then
-        echo $talk_name
         talk_dir="src/$talk_name"
         talk_file="$talk_dir/talk.md"
 
         mkdir -p "$talk_dir"
         cp talk.md "$talk_file"
-        sed -i "s/{{TITLE}}/$talk_name/g" "$talk_file"
+        sed -ie "s/{{TITLE}}/$talk_name/g" "$talk_file"
+        echo "Talk $talk_name created at $talk_dir"
     fi
 }
 
-talk:done() {
+mark:done() {
     talk_name="$2"
-    talk_file="src/$talk_name"
-    if [[ -n "$talk_file" ]]; then
-        ln -s "../$talk_file" "done/$talk_name"
+    talk_folder="src/$talk_name"
+    if [[ -n "$talk_folder" ]]; then
+        done_talk_file="$talk_folder/.done"
+        touch $done_talk_file
+        git add $done_talk_file
+        git commit -m "Marked $talk_name as done"
     fi
 }
 
-talk:compile() {
-    talk_path="$2"
-    talk_name=$(echo $talk_path | cut -d '/' -f 2)
+compile:pdf() {
+    talk_name="$2"
+    talk_path="src/$2"
 
     output_dir="dist"
     output_talk="$output_dir/$talk_name"
     mkdir -p $output_dir
 
-    $reveal_bin "$talk_path" --print "$output_talk" --theme league
+    echo "Compiling pdf for $talk_name"
+    $reveal_bin "$talk_path/talk.md" --print "$output_talk"
 }
 
-talks:todo() {
-    for talk_todo in $(ls src/); do
-        if [[ ! -e "done/$talk_todo" ]]; then
-            echo "$talk_todo"
+compile:html() {
+    talk_name="$2"
+    talk_path="src/$2/talk.md"
+
+    output_dir="dist"
+    output_talk="$output_dir/$talk_name"
+    mkdir -p $output_dir
+
+    echo "Compiling html for $talk_name"
+    $reveal_bin "$talk_path" --static "$output_talk"
+}
+
+present() {
+    talk_name="$2"
+    echo "Presenting $talk_name"
+    $reveal_bin "src/$talk_name/talk.md" --host 0.0.0.0
+}
+
+present:all() {
+    $reveal_bin src --host 0.0.0.0
+}
+
+done:compile() {
+    for talk in $(ls src/); do
+        if [[ -e "src/$talk/.done" ]]; then
+            compile:pdf _ $talk
+            compile:html _ $talk
         fi
     done
 }
 
-talks:present() {
-    $reveal_bin src --host 0.0.0.0 --theme league
-}
-
-talks:compile:done() {
-    for talk_done_path in $(find -L done -iname '*.md'); do
-        talk:compile _ $talk_done_path
+todo:list() {
+    for talk_todo in $(ls src/); do
+        if [[ ! -e "src/$talk_todo/.done" ]]; then
+            echo "TODO: $talk_todo"
+        fi
     done
 }
 
-"$1" "$@"
+
 help() {
     cat "$0" | grep "^.*() {$" | cut -d "(" -f1
 }
