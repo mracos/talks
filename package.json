@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mracos/talks#readme",
   "dependencies": {
     "phantomjs": "^2.1.7",
+    "pptx2pdf": "^1.0.10",
     "reveal-md": "^1.1.1"
   }
 }
