@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>terraform</title>
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/night.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+<!-- .slide: data-background="https://i1.wp.com/windowscustomization.com/wp-content/uploads/2018/09/flat-earth.gif" -->
+
+## terraform 🌍
+### alguma coisa
+
+@markito
+
+<aside class="notes"><ul>
+<li>mudei o nome pq sim, era com ansible mas isso fica pra próxima</li>
+<li>os slides estão bem cru, o que importa sou eu aqui falando com vocês</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/811/1080/720" -->
+
+pq ter uma talk sobre terraform? 🧐
+
+- IaaC no geral parece ser algo mais comum nas empresas
+- talvez tenha a possibilidade da gente ter que lidar com isso
+- pq é um assunto que eu curto 🤪
+
+<aside class="notes"><ul>
+<li>Trombamo com isso no projeto passado</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/811/1080/720" -->
+
+objetivo da talk 🎯
+
+- dar uma noção sobre o assunto
+- melhorar a _pesquisabilidade_ caso apareça no futuro de vocês
+
+<aside class="notes"><ul>
+<li>n sou expert em nada, então posso esquecer algumas coisas<ul>
+<li>ninguém vai sair especialista em nada aqui</li>
+</ul>
+</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/811/1080/720" -->
+
+mas... pra que serve esse treco? 🤵
+
+- possibilitar a **automatização** da tua infra
+    - máquinas virtuais no Google Cloud
+    - queues no Amazon SQS
+
+<aside class="notes"><ul>
+<li>tecnicamaente é só cloud</li>
+<li>Da pra usar com alguns serviços locais, tipo rabbitmq<ul>
+<li>criar os tópicos</li>
+<li>outra coisa vai ter que subir teu servidor do rabbitmq</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/811/1080/720" -->
+
+<span class="fragment fade-out">blz, já sei pra que serve 👍</span>
+<span class="fragment">mas o que exatamente é `terraaform`? 🤔</span>
+
+<ul class="fragment">
+    <li>aplicação CLI escrita em GO + conjunto de arquivos com a extensão `.tf`</li>
+    <li><b>não é o que provisiona as tuas máquinas</b></li>
+</ul>
+
+<aside class="notes"><ul>
+<li>n provisiona: não instala o ruby, somente cria as máquinas</li>
+<li>onde tu vai &quot;escrever a tua infra&quot;</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/811/1080/720" -->
+
+e agora, porque usar? 📄📈📊
+
+<ul>
+    <li class="fragment">
+        IaaC: automatização; testabilidade; processos; replicabilidade; documentação.
+    </li>
+    <li class="fragment">Cross vendor (qualquer cloud)</li>
+    <li class="fragment">Bem mantido e ativo</li>
+</ul>
+
+<aside class="notes"><ul>
+<li>Muitos dos benefícios vem de IaaC como um todo<ul>
+<li>processos: ao redor da mudança da tua infra</li>
+<li>automatização: replicabilidade</li>
+<li>confiabilidade:</li>
+</ul>
+</li>
+<li>poderia ser cloudformation (mas não ser é melhor? vendor lock-in)</li>
+<li>é bem mantido, tem uma empresa por trás (hashicorp)</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+o mínimo para fazer alguma coisa 💡
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+conceitinhos 📚
+
+<ul>
+    <li style="position:absolute;left: 35%" class="fragment fade-out">
+        <em><code>*.tf</code> files</em>
+        <ul>
+            <li>
+                <a href="https://www.terraform.io/docs/providers/index.html">providers</a>
+                <ul><li>aws, digital ocean</li></ul>
+            </li>
+            <li>
+                resources
+                <ul>
+                    <li>máquinas virtuais no EC2</li>
+                    <li>banco de dados no RDS</li>
+                    <li>buckets no S3</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li style="position:absolute;left: 35%" class="fragment">
+        <em>state</em>
+        <ul>
+            <li>
+                <a href="https://www.terraform.io/docs/backends/types/index.html">backends</a>
+                <ul><li>pode ser um arquivo local ou S3 por exemplo</li>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<aside class="notes"><ul>
+<li>tf files<ul>
+<li>providers: onde são criadas as coisas;</li>
+<li>resources: as coisas que tu cria;</li>
+<li>cada provider tem seu subset de resources: aws != DO</li>
+</ul>
+</li>
+<li>state<ul>
+<li>assim que o terraform mantém o histórico e sabe o que criar ou destruir</li>
+<li>é um arquivo json basicamente</li>
+<li>onde ficam as referências das coisas que tu criou <strong>pelo terraform</strong></li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+comandinhos 💻
+
+- `init`
+    - inicializa o repositório tf, baixa as "depedências" (providers, backends)
+    - sincroniza o state "remoto" com o local
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+comandinhos 💻
+
+- `plan`
+    - planeja qualquer mudança que você fizer nos arquivos (criação, destruição)
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+comandinhos 💻
+
+- `apply`
+    - "commita" as mudanças que você checou no `plan`
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+hora das coisas darem errado 🚨
+</script></section></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/681/1080/720" -->
+
+mais do que o mínimo 🕯
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/681/1080/720" -->
+
+conceitinhos 📚
+
+- `*.tf` files
+    - data
+    - _variables_
+        - `TF_VAR_variable`
+        - `-var-file=`
+    - referências cruzadas
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/681/1080/720" -->
+
+comandinhos 💻
+
+- `fmt`
+    - formata os arquivos
+-  `validate`
+    - valida os arquivos
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/681/1080/720" -->
+
+comandinhos 💻
+
+- `plan` e `apply`
+    - argumento `-plan-file=`
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/172/1080/720" -->
+
+hora das coisas darem errado 🚨
+</script></section></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1031/1080/720" -->
+
+agora o bagui é loco 🔥
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1031/1080/720" -->
+
+conceitinhos 📚
+
+- modules
+    - código externo, organização de código, coisas reutilizáveis
+
+<aside class="notes"><ul>
+<li>Modulo base</li>
+<li>tipo herança</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1031/1080/720" -->
+
+conceitinhos 📚
+
+- [provisioners](https://www.terraform.io/docs/provisioners/index.html)
+    - script
+    - chef
+- workspace
+    - diferentes ambientes, mesma infra
+        - qa vs prod
+
+<aside class="notes"><ul>
+<li>provisioner<ul>
+<li>é o que vai instalar os teus pacotes</li>
+<li>não cheguei a usar mt, só o de ansible</li>
+<li>usei docker images e packer</li>
+<li>podem ser plugins comunitários</li>
+</ul>
+</li>
+<li>workspaces<ul>
+<li>mesma infra, diferentes ambientes</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1031/1080/720" -->
+
+conceitinhos 📚 / comandinhos 💻
+
+- import
+- output
+
+<aside class="notes"><ul>
+<li>import: infra que já existe e quer trackear pelo tf</li>
+<li>output: informações que podem ser mostradas no console</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1022/1080/720" -->
+
+extras 🎁
+</script></section><section data-markdown><script type="text/template">
+<!-- .slide: data-background="https://picsum.photos/id/1022/1080/720" -->
+
+- provisionaamento (ansible)
+- packer, docker images (usar imagens pra não precisar provisionar)
+- vault, aws secrets manager, gerenciamento de secrets
+- cloud-formation, específico da aws</script></section></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {"transition":"slide"};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+
+        <script>
+            Reveal.initialize(options);
+        </script>
+    </body>
+</html>
